@@ -84,10 +84,10 @@
             });
         
             let socket = io.connect('https://spec-online.herokuapp.com');
-            socket.on('connect', 'thedata', function(data) {
-                console.log(data);
+            socket.on('connect', function(data) {
+                console.log(data);})
                
-               
+            socket.on('thedata', function(data){
                
                if(myChart.data.labels.length != 15) { // if there is less than 15 data points
                    myChart.data.labels.push(data.time); // add time in x-axis
