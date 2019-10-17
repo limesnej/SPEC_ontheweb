@@ -14,6 +14,26 @@ app.use(express.static('public')); // send index.html page on GET /
 
 io.on('connection', function(socket){ // listening for the connection event and log it
     console.log('a user connected');
+
+    parser.on('data', function(data) {
+        let str = data;
+    
+        let separ = str.split(", ");
+        let CO = separ[0];
+        let temp = separ[1];
+        let RH = separ[2];
+        const today = new Date();
+        
+        fs.appendFile('sensordata.txt', `\n${CO}, ${temp}, ${RH}, ${today.getDate()+"-"+today.getMonth()+1+"-"+today.getFullYear()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds()}`, (err) =>{
+            if (err) return console.log(err);
+            console.log('The data was appended to file!');
+        });
+        
+        console.log(CO, temp, RH);
+        
+        io.sockets.emit('thedata', {date: today.getDate()+"-"+today.getMonth() + 1 +"-"+today.getFullYear(), time: (today.getHours())+':'+(today.getMinutes())+':'+(today.getSeconds()),co:CO, temperature:temp, moist:RH});
+    });
+
 });
 
 http.listen(port1, function() {
@@ -30,22 +50,22 @@ http.listen(port1, function() {
 
 
 
-parser.on('data', function(data) {
-    let str = data;
+// parser.on('data', function(data) {
+//     let str = data;
 
-    let separ = str.split(", ");
-    let CO = separ[0];
-    let temp = separ[1];
-    let RH = separ[2];
-    const today = new Date();
+//     let separ = str.split(", ");
+//     let CO = separ[0];
+//     let temp = separ[1];
+//     let RH = separ[2];
+//     const today = new Date();
     
-    fs.appendFile('sensordata.txt', `\n${CO}, ${temp}, ${RH}, ${today.getDate()+"-"+today.getMonth()+1+"-"+today.getFullYear()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds()}`, (err) =>{
-        if (err) return console.log(err);
-        console.log('The data was appended to file!');
-    });
+//     fs.appendFile('sensordata.txt', `\n${CO}, ${temp}, ${RH}, ${today.getDate()+"-"+today.getMonth()+1+"-"+today.getFullYear()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds()}`, (err) =>{
+//         if (err) return console.log(err);
+//         console.log('The data was appended to file!');
+//     });
     
-    console.log(CO, temp, RH);
+//     console.log(CO, temp, RH);
     
-    io.sockets.emit('thedata', {date: today.getDate()+"-"+today.getMonth() + 1 +"-"+today.getFullYear(), time: (today.getHours())+':'+(today.getMinutes())+':'+(today.getSeconds()),co:CO, temperature:temp, moist:RH});
-});
+//     io.socket.emit('thedata', {date: today.getDate()+"-"+today.getMonth() + 1 +"-"+today.getFullYear(), time: (today.getHours())+':'+(today.getMinutes())+':'+(today.getSeconds()),co:CO, temperature:temp, moist:RH});
+// });
 
