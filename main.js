@@ -4,6 +4,11 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http); // bind socket io to our server
 const port1 = process.env.PORT || 3000;
+const SerialPort = require('serialport');
+const Readline = require('@serialport/parser-readline');
+const port = new SerialPort ('COM4', {baudRate: 9600});
+const parser = port.pipe(new Readline({delimiter: '\n'}));
+
 
 app.use(express.static('public')); // send index.html page on GET /
 
@@ -15,10 +20,10 @@ http.listen(port1, function() {
     console.log(`listening on ${port1}`);
 });
 
-const SerialPort = require('serialport');
-const Readline = require('@serialport/parser-readline');
-const port = new SerialPort ('COM4', {baudRate: 9600});
-const parser = port.pipe(new Readline({delimiter: '\n'}));
+// const SerialPort = require('serialport');
+// const Readline = require('@serialport/parser-readline');
+// const port = new SerialPort ('COM4', {baudRate: 9600});
+// const parser = port.pipe(new Readline({delimiter: '\n'}));
 
 
 
