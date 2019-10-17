@@ -83,13 +83,12 @@
                 },
             });
         
-            let socket = io.connect('https://spec-online.herokuapp.com');
-            socket.on('connect', function(socket) {
-                console.log('Hey')
-            });
+            let socket = io.connect();
+            
+            
                
             socket.on('thedata', function(data){
-               
+               console.log(data.CO);
                if(myChart.data.labels.length != 15) { // if there is less than 15 data points
                    myChart.data.labels.push(data.time); // add time in x-axis
                    myChart.data.datasets.forEach((dataset) => {
@@ -138,7 +137,8 @@
                }
                moistChart.update(); // update the graph
             });
-           
+        
+        
         
             
             
