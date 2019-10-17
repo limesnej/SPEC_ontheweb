@@ -83,7 +83,7 @@
                 },
             });
         
-            let socket = io();
+            let socket = io(443);
             socket.on('thedata', function(data) {
                 console.log(data.co);
                
