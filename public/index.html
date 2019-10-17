@@ -83,7 +83,7 @@
                 },
             });
         
-            let socket = io('https://spec-online.herokuapp.com');
+            let socket = io();
             socket.on('thedata', function(data) {
                 console.log(data.co);
                
