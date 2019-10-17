@@ -3,7 +3,7 @@ const fs = require('fs');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http); // bind socket io to our server
-
+const port = process.env.PORT || 3000;
 
 app.use(express.static('public')); // send index.html page on GET /
 
@@ -11,8 +11,8 @@ io.on('connection', function(socket){ // listening for the connection event and 
     console.log('a user connected');
 });
 
-http.listen(3000, function() {
-    console.log('listening on *:3000');
+http.listen(port, function() {
+    console.log(`listening on ${port}`);
 });
 
 const SerialPort = require('serialport');
