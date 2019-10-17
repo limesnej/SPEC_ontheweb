@@ -85,10 +85,10 @@
         
             let socket = io.connect();
             
-            
+            socket.on('connection', function() {});
                
             socket.on('thedata', function(data){
-               console.log(data.CO);
+               console.log(data.co);
                if(myChart.data.labels.length != 15) { // if there is less than 15 data points
                    myChart.data.labels.push(data.time); // add time in x-axis
                    myChart.data.datasets.forEach((dataset) => {
