@@ -28,5 +28,8 @@
     "tunnel-agent": "^0.6.0",
     "uglify-js": "^3.6.2",
     "ws": "^7.1.2"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3"
   }
 }
