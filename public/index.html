@@ -84,7 +84,7 @@
             });
         
             let socket = io.connect('https://spec-online.herokuapp.com');
-            socket.on('connect', function(data) {
+            socket.on('connect', 'thedata', function(data) {
                 console.log(data);
                
                
