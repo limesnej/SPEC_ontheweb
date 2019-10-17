@@ -3,7 +3,7 @@ const fs = require('fs');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http); // bind socket io to our server
-const port1 = process.env.PORT || 3000;
+const port1 = 4000 || 3000;
 
 app.use(express.static('public')); // send index.html page on GET /
 
