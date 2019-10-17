@@ -13,7 +13,7 @@ io.on('connection', function(socket){ // listening for the connection event and 
 
 http.listen(port1, function() {
     console.log(`listening on ${port1}`);
-});git
+});
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
