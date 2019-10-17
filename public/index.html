@@ -83,7 +83,7 @@
                 },
             });
         
-            let socket = io('http://localhost:3000/');
+            let socket = io();
             socket.on('thedata', function(data) {
                 console.log(data.co);
                
