@@ -24,11 +24,9 @@ const parser = port.pipe(new Readline({delimiter: '\n'}));
 // });
 
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public');
-})
 
-// app.use(express.static(__dirname + '/public')); // send index.html page on GET /
+
+app.use(express.static(__dirname + '/public')); // send index.html page on GET /
 
 io.on('connection', function(socket){ // listening for the connection event and log it
     console.log('a user connected');
