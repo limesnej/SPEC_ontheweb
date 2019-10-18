@@ -20,12 +20,12 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "request": "^2.88.0",
+    "serialport": "^7.1.5",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "cross-env": "^6.0.3"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/limesnej/SPEC_ontheweb.git"
@@ -35,5 +35,3 @@
   },
   "homepage": "https://github.com/limesnej/SPEC_ontheweb#readme"
 }
-
-
