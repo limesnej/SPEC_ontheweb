@@ -8,7 +8,7 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const port = new SerialPort ('COM4', {baudRate: 9600});
 const parser = port.pipe(new Readline({delimiter: '\n'}));
-const INDEX = path.join(__dirname, '/public');
+const INDEX = path.join(__dirname, '/public/index.html');
 
 const server = express ()
     .use((req, res) => res.sendFile(INDEX))
