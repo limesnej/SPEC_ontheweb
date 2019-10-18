@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path')
-const http = require('http').createServer(app);
+const http = require('http').Server(app);
 const socketIO = require('socket.io') 
 const io = require('socket.io')(http);
 const port1 = process.env.PORT || 3000;
@@ -24,9 +24,11 @@ const parser = port.pipe(new Readline({delimiter: '\n'}));
 // });
 
 
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/public');
+})
 
-
-app.use(express.static(__dirname + '/public')); // send index.html page on GET /
+// app.use(express.static(__dirname + '/public')); // send index.html page on GET /
 
 io.on('connection', function(socket){ // listening for the connection event and log it
     console.log('a user connected');
