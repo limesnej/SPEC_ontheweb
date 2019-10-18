@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>CO</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 </head>
@@ -85,59 +85,59 @@
         
             const socket = io();
             
-            
                
-            socket.on('thedata', function(data){
-               console.log(data.co);
-               if(myChart.data.labels.length != 15) { // if there is less than 15 data points
-                   myChart.data.labels.push(data.time); // add time in x-axis
-                   myChart.data.datasets.forEach((dataset) => {
-                       dataset.data.push(data.co); // add CO in y-axis
-                   });
-               }
-               else { // if there already is 15 data points in the graph.
-                   myChart.data.labels.shift(); // remove first time data
-                   myChart.data.labels.push(data.time); // insert latest time data
-                   myChart.data.datasets.forEach((dataset) => {
-                       dataset.data.shift(); // remove first co data
-                       dataset.data.push(data.co); // insert latest CO data
-                   });
-               }
-               myChart.update(); // update the graph
+            socket.on('data', function(data){
+                socket.on('thedata', function(data) {
+                console.log(data.co);
+                if(myChart.data.labels.length != 15) { // if there is less than 15 data points
+                    myChart.data.labels.push(data.time); // add time in x-axis
+                    myChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(data.co); // add CO in y-axis
+                    });
+                }
+                else { // if there already is 15 data points in the graph.
+                    myChart.data.labels.shift(); // remove first time data
+                    myChart.data.labels.push(data.time); // insert latest time data
+                    myChart.data.datasets.forEach((dataset) => {
+                        dataset.data.shift(); // remove first co data
+                        dataset.data.push(data.co); // insert latest CO data
+                    });
+                }
+                myChart.update(); // update the graph
 
-               if(tempChart.data.labels.length != 100) { // if there is less than 15 data points
-                   tempChart.data.labels.push(data.time); // add time in x-axis
-                   tempChart.data.datasets.forEach((dataset) => {
-                       dataset.data.push(data.temperature); // add temp in y-axis
-                   });
-               }
-               else { // if there already is 15 data points in the graph.
-                   tempChart.data.labels.shift(); // remove first time data
-                   tempChart.data.labels.push(data.time); // insert latest time data
-                   tempChart.data.datasets.forEach((dataset) => {
-                       dataset.data.shift(); // remove first co data
-                       dataset.data.push(data.temperature); // insert latest temp data
-                   });
-               }
-               tempChart.update(); // update the graph
+                if(tempChart.data.labels.length != 100) { // if there is less than 15 data points
+                    tempChart.data.labels.push(data.time); // add time in x-axis
+                    tempChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(data.temperature); // add temp in y-axis
+                    });
+                }
+                else { // if there already is 15 data points in the graph.
+                    tempChart.data.labels.shift(); // remove first time data
+                    tempChart.data.labels.push(data.time); // insert latest time data
+                    tempChart.data.datasets.forEach((dataset) => {
+                        dataset.data.shift(); // remove first co data
+                        dataset.data.push(data.temperature); // insert latest temp data
+                    });
+                }
+                tempChart.update(); // update the graph
 
-               if(moistChart.data.labels.length != 15) { // if there is less than 15 data points
-                   moistChart.data.labels.push(data.time); // add time in x-axis
-                   moistChart.data.datasets.forEach((dataset) => {
-                       dataset.data.push(data.moist); // add rh in y-axis
-                   });
-               }
-               else { // if there already is 15 data points in the graph.
-                   moistChart.data.labels.shift(); // remove first time data
-                   moistChart.data.labels.push(data.time); // insert latest time data
-                   moistChart.data.datasets.forEach((dataset) => {
-                       dataset.data.shift(); // remove first co data
-                       dataset.data.push(data.moist); // insert latest rh data
-                   });
-               }
-               moistChart.update(); // update the graph
+                if(moistChart.data.labels.length != 15) { // if there is less than 15 data points
+                    moistChart.data.labels.push(data.time); // add time in x-axis
+                    moistChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(data.moist); // add rh in y-axis
+                    });
+                }
+                else { // if there already is 15 data points in the graph.
+                    moistChart.data.labels.shift(); // remove first time data
+                    moistChart.data.labels.push(data.time); // insert latest time data
+                    moistChart.data.datasets.forEach((dataset) => {
+                        dataset.data.shift(); // remove first co data
+                        dataset.data.push(data.moist); // insert latest rh data
+                    });
+                }
+                moistChart.update(); // update the graph
+                });
             });
-        
         
         
             
