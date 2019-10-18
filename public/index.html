@@ -83,9 +83,9 @@
                 },
             });
         
-            let socket = io.connect();
+            const socket = io();
             
-            socket.on('connection', function() {});
+            
                
             socket.on('thedata', function(data){
                console.log(data.co);
