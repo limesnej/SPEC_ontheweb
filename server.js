@@ -3,18 +3,18 @@ const Readline = require('@serialport/parser-readline');
 const port = new SerialPort ('COM4', {baudRate: 9600});
 const parser = port.pipe(new Readline({delimiter: '\n'}));
 const dweetClient = require('node-dweetio');
-const moment = require('moment');
-
+// const moment = require('moment');
+const fs = require('fs');
 dweetio = new dweetClient();
-const dweetThing = 'spec-co';
+// const dweetThing = 'spec-co';
+const five = require('johnny-five');
+const board = new five.Board();
 
 
 
 
-
-
-
-parser.on('data', function(data) {
+board.on('ready', () => {
+    parser.on('data', function(data) {
     const dweetThing = 'spec-co';
     let separ = data.split(", ");
     let CO = separ[0];
@@ -46,3 +46,5 @@ parser.on('data', function(data) {
         }
     });
 });
+});
+
