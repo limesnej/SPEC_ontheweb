@@ -7,15 +7,15 @@ const dweetClient = require('node-dweetio');
 const fs = require('fs');
 dweetio = new dweetClient();
 // const dweetThing = 'spec-co';
-const five = require('johnny-five');
-const board = new five.Board();
+// const five = require('johnny-five');
+// const board = new five.Board();
 
 
 
 
-board.on('ready', () => {
-    new five.Sensor.digital([ { pin: 10}, { pin: 11}]);
-    parser.on('data', function(data) {
+// board.on('ready', () => {
+//     new five.Sensor.digital([ { pin: 10}, { pin: 11}]);
+parser.on('data', function(data) {
     const dweetThing = 'spec-co';
     let separ = data.split(", ");
     let CO = separ[0];
@@ -47,5 +47,5 @@ board.on('ready', () => {
         }
     });
 });
-});
+
 
