@@ -88,52 +88,52 @@
             
                
             
-            socket.on('thedata', function(data) {
+            socket.on('sensor-data', (content) => {
                 console.log(data.co);
-            if(myChart.data.labels.length != 15) { // if there is less than 15 data points
-                myChart.data.labels.push(data.time); // add time in x-axis
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data.push(data.co); // add CO in y-axis
+            if(myChart.content.labels.length != 15) { // if there is less than 15 data points
+                myChart.content.labels.push(content.time); // add time in x-axis
+                myChart.content.datasets.forEach((dataset) => {
+                    dataset.content.push(content.sensorData.carb); // add CO in y-axis
                 });
             }
             else { // if there already is 15 data points in the graph.
-                myChart.data.labels.shift(); // remove first time data
-                myChart.data.labels.push(data.time); // insert latest time data
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data.shift(); // remove first co data
-                    dataset.data.push(data.co); // insert latest CO data
+                myChart.content.labels.shift(); // remove first time data
+                myChart.content.labels.push(content.time); // insert latest time data
+                myChart.content.datasets.forEach((dataset) => {
+                    dataset.content.shift(); // remove first co data
+                    dataset.content.push(content.sensorData.carb); // insert latest CO data
                 });
             }
             myChart.update(); // update the graph
 
-            if(tempChart.data.labels.length != 100) { // if there is less than 15 data points
-                tempChart.data.labels.push(data.time); // add time in x-axis
-                tempChart.data.datasets.forEach((dataset) => {
-                    dataset.data.push(data.temperature); // add temp in y-axis
+            if(tempChart.content.labels.length != 100) { // if there is less than 15 data points
+                tempChart.content.labels.push(content.time); // add time in x-axis
+                tempChart.content.datasets.forEach((dataset) => {
+                    dataset.content.push(content.sensorData.temperature); // add temp in y-axis
                 });
             }
             else { // if there already is 15 data points in the graph.
-                tempChart.data.labels.shift(); // remove first time data
-                tempChart.data.labels.push(data.time); // insert latest time data
-                tempChart.data.datasets.forEach((dataset) => {
-                    dataset.data.shift(); // remove first co data
-                    dataset.data.push(data.temperature); // insert latest temp data
+                tempChart.content.labels.shift(); // remove first time data
+                tempChart.content.labels.push(content.time); // insert latest time data
+                tempChart.content.datasets.forEach((dataset) => {
+                    dataset.content.shift(); // remove first co data
+                    dataset.content.push(content.sensorData.temperature); // insert latest temp data
                 });
             }
             tempChart.update(); // update the graph
 
-            if(moistChart.data.labels.length != 15) { // if there is less than 15 data points
-                moistChart.data.labels.push(data.time); // add time in x-axis
-                moistChart.data.datasets.forEach((dataset) => {
-                    dataset.data.push(data.moist); // add rh in y-axis
+            if(moistChart.content.labels.length != 15) { // if there is less than 15 data points
+                moistChart.content.labels.push(content.time); // add time in x-axis
+                moistChart.content.datasets.forEach((dataset) => {
+                    dataset.content.push(content.sensorData.moist); // add rh in y-axis
                 });
             }
             else { // if there already is 15 data points in the graph.
-                moistChart.data.labels.shift(); // remove first time data
-                moistChart.data.labels.push(data.time); // insert latest time data
-                moistChart.data.datasets.forEach((dataset) => {
-                    dataset.data.shift(); // remove first co data
-                    dataset.data.push(data.moist); // insert latest rh data
+                moistChart.content.labels.shift(); // remove first time data
+                moistChart.content.labels.push(content.time); // insert latest time data
+                moistChart.content.datasets.forEach((dataset) => {
+                    dataset.content.shift(); // remove first co data
+                    dataset.content.push(content.sensorData.moistness); // insert latest rh data
                 });
             }
             moistChart.update(); // update the graph
