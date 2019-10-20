@@ -32,38 +32,38 @@ dweetio.listen_for(dweetThing, (dweet)=> {
     io.emit('sensor-data', data);
 })
 
-parser.on('data', function(data) {
-    const dweetThing = 'spec-co';
-    let separ = data.split(", ");
-    let CO = separ[0];
-    let temp = separ[1];
-    let RH = separ[2];
-    const today = new Date();
+// parser.on('data', function(data) {
+//     const dweetThing = 'spec-co';
+//     let separ = data.split(", ");
+//     let CO = separ[0];
+//     let temp = separ[1];
+//     let RH = separ[2];
+//     const today = new Date();
     
-    fs.appendFile('sensordata.txt', `\n${CO}, ${temp}, ${RH}, ${today.getDate()+"-"+today.getMonth()+1+"-"+today.getFullYear()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds()}`, (err) =>{
-        if (err) return console.log(err);
-        console.log('The data was appended to file!');
-    });
+//     fs.appendFile('sensordata.txt', `\n${CO}, ${temp}, ${RH}, ${today.getDate()+"-"+today.getMonth()+1+"-"+today.getFullYear()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds()}`, (err) =>{
+//         if (err) return console.log(err);
+//         console.log('The data was appended to file!');
+//     });
     
-    
-
-    const tweetMessage = {
-        carb: CO,
-        temperature: temp,
-        moistness: RH,
-    };
-    // console.log(CO, temp, RH);
     
 
-    dweetio.dweet_for(dweetThing, tweetMessage, (err, dweet)=> {
-        if (err) {
-            console.log('[Error]:', err);
-        }
-        if (dweet) {
-            console.log(dweet.content);
-        }
-    });
-});
+//     const tweetMessage = {
+//         carb: CO,
+//         temperature: temp,
+//         moistness: RH,
+//     };
+//     console.log(CO, temp, RH);
+    
+
+//     dweetio.dweet_for(dweetThing, tweetMessage, (err, dweet)=> {
+//         if (err) {
+//             console.log('[Error]:', err);
+//         }
+//         if (dweet) {
+//             console.log(dweet.content);
+//         }
+//     });
+// });
 
 
 
