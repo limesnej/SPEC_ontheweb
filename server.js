@@ -14,6 +14,7 @@ const board = new five.Board();
 
 
 board.on('ready', () => {
+    new five.Sensor.digital([ { pin: 10}, { pin: 11}]);
     parser.on('data', function(data) {
     const dweetThing = 'spec-co';
     let separ = data.split(", ");
