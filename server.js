@@ -4,7 +4,7 @@ const port = new SerialPort ('COM4', {baudRate: 9600});
 const parser = port.pipe(new Readline({delimiter: '\n'}));
 const dweetClient = require('node-dweetio');
 const dweetio = new dweetClient();
-
+const fs = require('fs')
 
 
 
