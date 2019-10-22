@@ -5,7 +5,7 @@ const parser = port.pipe(new Readline({delimiter: '\n'}));
 const dweetClient = require('node-dweetio');
 // const moment = require('moment');
 const fs = require('fs');
-dweetio = new dweetClient();
+const dweetio = new dweetClient();
 
 
 
@@ -13,32 +13,33 @@ dweetio = new dweetClient();
  
 
 parser.on('data', function(data) {
-    const dweetThing = 'spec-co';
+    const dweetThing = 'spec-co-monitor';
     // let separ = data.split(", ");
     // let CO = separ[0];
     // let temp = separ[1];
     // let RH = separ[2];
     // const today = new Date();
-
-    let str = data;
-    // let str1 = str.replace(/\r?\n|\r/g, "");
-    // let str2 = JSON.stringify(str);
-    let str2 = str.replace(/\r?\n|\r/g, "");
-    // let str3 = JSON.parse(str2);
-    let str3 = JSON.stringify(str2);
-    let str4 = JSON.parse(str3);
     
+    const str1 = data;
+    
+    // str2 = str1.replace(/\r?\n|\r/g, "");
+    
+    // let str3 = JSON.stringify(str1);
+    // let str4 = str3.replace(/\\/g, "");
+    // let str5 = str4.replace(/\"/g, "");
+     let str5 = JSON.parse(str1);
+    // let str6 = JSON.parse(str5);
     // fs.appendFile('sensordata.txt', `\n${CO}, ${temp}, ${RH}, ${today.getDate()+"-"+today.getMonth()+1+"-"+today.getFullYear()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds()}`, (err) =>{
     //     if (err) return console.log(err);
     //     console.log('The data was appended to file!');
     // });
     
-    console.log(str4);
+    console.log(str5);
 
     const tweetMessage = {
-        carb: str4.Co,
-        temperature: str4.Temperature,
-        moistness: str4.Humidity,
+        carb: str5.Co,
+        temperature: str5.Temperature,
+        moistness: str5.Humidity,
     };
     // // console.log(CO, temp, RH);
     
