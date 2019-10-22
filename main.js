@@ -12,7 +12,7 @@ const dweetClient = require('node-dweetio');
 const moment = require('moment');
 const bodyParser = require('body-parser');
 dweetio = new dweetClient();
-const dweetThing = 'spec-co';
+const dweetThing = 'spec-co-sensorthing';
 
 
 
