@@ -24,8 +24,23 @@
             <canvas id="moistCanvas"></canvas>
         </div>
 
+        <div id="text"><h2></h2></div>
+
     <script>
-        
+        const pubnub = PUBNUB.init({
+            publish_key: 'pub-c-34d8b93e-b537-4707-8350-d62c6eddb275',
+            subscribe_key: 'sub-c-4e15e74e-f49f-11e9-ba7f-428dd4590e3f'
+        })
+
+        const channel = "hello_world";
+        let text = document.getElementById('text');
+
+        text.addEventListener('change', () => {
+            pubnub.subscribe({
+                channel: channel,
+                
+            })
+        })
             const ctx = document.getElementById('myCanvas').getContext('2d');
             const myChart = new Chart(ctx, {
                 type: 'line',
