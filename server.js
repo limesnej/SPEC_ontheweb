@@ -23,7 +23,7 @@ parser.on('data', function(data) {
    
     let str5 = JSON.parse(str1);
     
-    console.log(str5.Co);  
+    console.log(str5);  
     let message = str5;
     pubnub.publish({
         channel: 'hello_world',

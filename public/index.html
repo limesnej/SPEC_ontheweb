@@ -8,14 +8,13 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.27.0.js"></script>
-    <!-- <script type="text/javascript" src="//pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
-                <link type="text/css" rel="stylesheet" href="//pubnub.github.io/eon/v/eon/1.0.0/eon.css"/> -->
+    
 </head>
 <style>
    
 </style>
 <body>
-        !-- <div id="lineGraph" class="canvasContainer" style="max-width:600px; height:300px;">
+        <div id="lineGraph" class="canvasContainer" style="max-width:600px; height:300px;">
             <canvas id="myCanvas"></canvas>
         </div>
 
@@ -29,8 +28,66 @@
 
         <h2 id="text">Hey</h2>
 
-        <div id="body-spline"></div>
+        
     <script>
+
+        const ctx = document.getElementById('myCanvas').getContext('2d');
+                        const myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [], // x-akse
+                            datasets: [{
+                                label: 'CO',
+                                borderColor: '#FF5733',
+                                data: [],    // y-akse
+                                fill: false,
+                                pointStyle: 'circle',
+                                backgroundColor: '#3498D8',
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                                lineTension: 0,
+                                }]
+                            },
+                        });
+        const cty = document.getElementById('tempCanvas').getContext('2d');
+                        const tempChart = new Chart(cty, {
+                        type: 'line',
+                        data: {
+                            labels: [], // x-akse
+                            datasets: [{
+                                label: 'Temp',
+                                borderColor: '#FF5733',
+                                data: [],    // y-akse
+                                fill: false,
+                                pointStyle: 'circle',
+                                backgroundColor: '#3498D8',
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                                lineTension: 0,
+                                }]
+                            },
+                        });
+
+            const ctz = document.getElementById('moistCanvas').getContext('2d');
+                        const moistChart = new Chart(ctz, {
+                        type: 'line',
+                        data: {
+                            labels: [], // x-akse
+                            datasets: [{
+                                label: 'RH %',
+                                borderColor: '#FF5733',
+                                data: [],    // y-akse
+                                fill: false,
+                                pointStyle: 'circle',
+                                backgroundColor: '#3498D8',
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                                lineTension: 0,
+                                }]
+                            },
+                        });
+
+
         const pubnub = new PubNub({
             publish_key: 'pub-c-34d8b93e-b537-4707-8350-d62c6eddb275',
             subscribe_key: 'sub-c-4e15e74e-f49f-11e9-ba7f-428dd4590e3f'
@@ -40,85 +97,89 @@
         pubnub.subscribe({ channel: ['hello_world']});
         pubnub.addListener({
             message: function(message) {
-                console.log(message);
+                console.log(message.message);
                 const CO = message.message.Co;
                 document.getElementById('text').textContent = CO;
                 
+                let currentDate = new Date();
+                let date = currentDate.getDate();
+                let month = currentDate.getMonth();
+                let year = currentDate.getFullYear();
+                let timestamp = new Date(message.message.timetoken);
+                let timesString = timestamp.toLocaleTimeString();
+
+                let dateString =  timesString;
+
+
+                const time = {time: (currentDate.getHours()) + ":" + (currentDate.getMinutes()) + ":" + (currentDate.getSeconds())};
+                
+                console.log(time.time);
+                const data = CO;
+               
+                
+                if(myChart.data.labels.length != 15) { // if there is less than 15 data points
+                        myChart.data.labels.push(time.time); // add time in x-axis
+                        myChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(CO); // add CO in y-axis
+                        });
+                    }
+                else { // if there already is 15 data points in the graph.
+                    myChart.data.labels.shift(); // remove first time data
+                    myChart.data.labels.push(time.time); // insert latest time data
+                    myChart.data.datasets.forEach((dataset) => {
+                    dataset.data.shift(); // remove first co data
+                    dataset.data.push(CO); // insert latest CO data
+                    });
+                    }
+                myChart.update(); // update the graph  
+                
+                if(tempChart.data.labels.length != 100) { // if there is less than 15 data points
+                    tempChart.data.labels.push(time.time); // add time in x-axis
+                    tempChart.data.datasets.forEach((dataset) => {
+                    dataset.data.push(message.message.Temperature); // add temp in y-axis
+                        });
+                    }
+                else { // if there already is 15 data points in the graph.
+                    tempChart.data.labels.shift(); // remove first time data
+                    tempChart.data.labels.push(time.time); // insert latest time data
+                    tempChart.data.datasets.forEach((dataset) => {
+                    dataset.data.shift(); // remove first co data
+                    dataset.data.push(message.message.Temperature); // insert latest temp data
+                });
+                }
+                tempChart.update(); // update the graph
+
+            if(moistChart.data.labels.length != 15) { // if there is less than 15 data points
+                moistChart.data.labels.push(time.time); // add time in x-axis
+                moistChart.data.datasets.forEach((dataset) => {
+                    dataset.data.push(message.message.Humidity); // add rh in y-axis
+                });
             }
+            else { // if there already is 15 data points in the graph.
+                moistChart.data.labels.shift(); // remove first time data
+                moistChart.data.labels.push(time.time); // insert latest time data
+                moistChart.data.datasets.forEach((dataset) => {
+                    dataset.data.shift(); // remove first co data
+                    dataset.data.push(message.message.Humidity); // insert latest rh data
+                });
+            }
+            moistChart.update(); // update the graph
+
+                }
         });
         pubnub.subscribe({
             channels: ['hello_world']
         });
         
-        // pubnub.publish({
-        // channel: ['hello_world'],
-        // message: function(message) {
-        //     console.log(message);
-        // }
-        // });
-
         
 
 
 
-        let text = document.getElementById('text')
+      
 
-         const ctx = document.getElementById('myCanvas').getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [], // x-akse
-                    datasets: [{
-                        label: 'CO',
-                        borderColor: '#FF5733',
-                        data: [],    // y-akse
-                        fill: false,
-                        pointStyle: 'circle',
-                        backgroundColor: '#3498D8',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        lineTension: 0,
-                    }]
-                },
-            });
+            
 
-            const cty = document.getElementById('tempCanvas').getContext('2d');
-            const tempChart = new Chart(cty, {
-                type: 'line',
-                data: {
-                    labels: [], // x-akse
-                    datasets: [{
-                        label: 'Temp',
-                        borderColor: '#FF5733',
-                        data: [],    // y-akse
-                        fill: false,
-                        pointStyle: 'circle',
-                        backgroundColor: '#3498D8',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        lineTension: 0,
-                    }]
-                },
-            });
-
-            const ctz = document.getElementById('moistCanvas').getContext('2d');
-            const moistChart = new Chart(ctz, {
-                type: 'line',
-                data: {
-                    labels: [], // x-akse
-                    datasets: [{
-                        label: 'RH %',
-                        borderColor: '#FF5733',
-                        data: [],    // y-akse
-                        fill: false,
-                        pointStyle: 'circle',
-                        backgroundColor: '#3498D8',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        lineTension: 0,
-                    }]
-                },
-            });
+          
         
             const socket = io();
             
@@ -127,53 +188,10 @@
             
             
             
-            // if(myChart.content.labels.length != 15) { // if there is less than 15 data points
-            //     myChart.content.labels.push(content.time); // add time in x-axis
-            //     myChart.content.datasets.forEach((dataset) => {
-            //         dataset.content.push(content.sensorData.carb); // add CO in y-axis
-            //     });
-            // }
-            // else { // if there already is 15 data points in the graph.
-            //     myChart.content.labels.shift(); // remove first time data
-            //     myChart.content.labels.push(content.time); // insert latest time data
-            //     myChart.content.datasets.forEach((dataset) => {
-            //         dataset.content.shift(); // remove first co data
-            //         dataset.content.push(content.sensorData.carb); // insert latest CO data
-            //     });
-            // }
-            // myChart.update(); // update the graph
+           
 
-            // if(tempChart.content.labels.length != 100) { // if there is less than 15 data points
-            //     tempChart.content.labels.push(content.time); // add time in x-axis
-            //     tempChart.content.datasets.forEach((dataset) => {
-            //         dataset.content.push(content.sensorData.temperature); // add temp in y-axis
-            //     });
-            // }
-            // else { // if there already is 15 data points in the graph.
-            //     tempChart.content.labels.shift(); // remove first time data
-            //     tempChart.content.labels.push(content.time); // insert latest time data
-            //     tempChart.content.datasets.forEach((dataset) => {
-            //         dataset.content.shift(); // remove first co data
-            //         dataset.content.push(content.sensorData.temperature); // insert latest temp data
-            //     });
-            // }
-            // tempChart.update(); // update the graph
 
-            // if(moistChart.content.labels.length != 15) { // if there is less than 15 data points
-            //     moistChart.content.labels.push(content.time); // add time in x-axis
-            //     moistChart.content.datasets.forEach((dataset) => {
-            //         dataset.content.push(content.sensorData.moist); // add rh in y-axis
-            //     });
-            // }
-            // else { // if there already is 15 data points in the graph.
-            //     moistChart.content.labels.shift(); // remove first time data
-            //     moistChart.content.labels.push(content.time); // insert latest time data
-            //     moistChart.content.datasets.forEach((dataset) => {
-            //         dataset.content.shift(); // remove first co data
-            //         dataset.content.push(content.sensorData.moistness); // insert latest rh data
-            //     });
-            // }
-            // moistChart.update(); // update the graph
+        
             
             
         
