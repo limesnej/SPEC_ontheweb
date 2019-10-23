@@ -43,8 +43,8 @@
                                 fill: false,
                                 pointStyle: 'circle',
                                 backgroundColor: '#3498D8',
-                                pointRadius: 5,
-                                pointHoverRadius: 7,
+                                pointRadius: 2,
+                                pointHoverRadius: 4,
                                 lineTension: 0,
                                 }]
                             },
@@ -61,8 +61,8 @@
                                 fill: false,
                                 pointStyle: 'circle',
                                 backgroundColor: '#3498D8',
-                                pointRadius: 5,
-                                pointHoverRadius: 7,
+                                pointRadius: 2,
+                                pointHoverRadius: 4,
                                 lineTension: 0,
                                 }]
                             },
@@ -80,8 +80,8 @@
                                 fill: false,
                                 pointStyle: 'circle',
                                 backgroundColor: '#3498D8',
-                                pointRadius: 5,
-                                pointHoverRadius: 7,
+                                pointRadius: 2,
+                                pointHoverRadius: 4,
                                 lineTension: 0,
                                 }]
                             },
@@ -117,7 +117,7 @@
                 const data = CO;
                
                 
-                if(myChart.data.labels.length != 15) { // if there is less than 15 data points
+                if(myChart.data.labels.length != 360) { // if there is less than 15 data points
                         myChart.data.labels.push(time.time); // add time in x-axis
                         myChart.data.datasets.forEach((dataset) => {
                         dataset.data.push(CO); // add CO in y-axis
@@ -133,7 +133,7 @@
                     }
                 myChart.update(); // update the graph  
                 
-                if(tempChart.data.labels.length != 100) { // if there is less than 15 data points
+                if(tempChart.data.labels.length != 360) { // if there is less than 15 data points
                     tempChart.data.labels.push(time.time); // add time in x-axis
                     tempChart.data.datasets.forEach((dataset) => {
                     dataset.data.push(message.message.Temperature); // add temp in y-axis
@@ -149,7 +149,7 @@
                 }
                 tempChart.update(); // update the graph
 
-            if(moistChart.data.labels.length != 15) { // if there is less than 15 data points
+            if(moistChart.data.labels.length != 360) { // if there is less than 15 data points
                 moistChart.data.labels.push(time.time); // add time in x-axis
                 moistChart.data.datasets.forEach((dataset) => {
                     dataset.data.push(message.message.Humidity); // add rh in y-axis
